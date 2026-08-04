@@ -1,0 +1,52 @@
+diff --git a/deepspec/eval/base_evaluator.py b/deepspec/eval/base_evaluator.py
+--- a/deepspec/eval/base_evaluator.py
++++ b/deepspec/eval/base_evaluator.py
+@@ -306,6 +306,8 @@ def verify_draft_tokens(
+     max_proposal_tokens: int,
+     current_token_ids: torch.Tensor | None = None,
+     stop_token_ids: list[int] | None = None,
++    asd_config=None,
++    asd_state=None,
+     risk_state=None,
+     max_regret_per_value: float = float("inf"),
+     max_relaxed_tokens_per_block: int | None = None,
+@@ -458,6 +460,39 @@ def verify_draft_tokens(
+     intervention_regret = None
+     intervention_position = None
+     intervention_exact_run = None
++    if asd_config is not None:
++        if not greedy:
++            raise ValueError("ASD requires greedy decoding with temperature=0")
++        if asd_state is None:
++            raise ValueError("ASD requires one persistent state per request")
++        if risk_state is not None or local_relaxation != "strict":
++            raise ValueError("ASD cannot be combined with another relaxed verifier")
++        if draft_token_count > 0:
++            from asd.adapters import DeepSpecDSparkAdapter
++
++            decision = DeepSpecDSparkAdapter(asd_config).decide(
++                draft_token_ids=proposal.verify_input_ids[
++                    0, 1 : draft_token_count + 1
++                ].tolist(),
++                target_output=target_output.logits[
++                    0, :draft_token_count, :
++                ],
++                state=asd_state,
++            )
++            accepted_draft_tokens = int(decision.accepted_tokens)
++            risk_spent = float(decision.risk_spent)
++            relaxed_draft_tokens = int(decision.relaxed_tokens)
++            blocking_position = decision.stopped_on_position
++            if blocking_position is not None:
++                blocking_regret = float(
++                    decision.token_regrets[blocking_position]
++                )
++            accept_prefix_mask = torch.zeros(
++                (1, draft_token_count),
++                dtype=torch.int64,
++                device=proposal.verify_input_ids.device,
++            )
++            accept_prefix_mask[:, :accepted_draft_tokens] = 1
+     if (
+         greedy
+         and local_relaxation != "strict"

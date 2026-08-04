@@ -1,0 +1,24 @@
+{
+  "config": {
+    "method_name": "ASD",
+    "risk_budget": 8.0,
+    "max_regret_per_value": 0.25,
+    "max_relaxed_tokens_per_block": 2,
+    "temperature": 0.0
+  },
+  "fixed_workload": true,
+  "baseline_pre": {
+    "completion_tokens_per_s": 100.0,
+    "completion_tokens": 1024
+  },
+  "candidate": {
+    "completion_tokens_per_s": 106.0,
+    "completion_tokens": 1024,
+    "accuracy_delta_pp": -0.5,
+    "completion_length_delta_pct": 0.2
+  },
+  "baseline_post": {
+    "completion_tokens_per_s": 100.0,
+    "completion_tokens": 1024
+  }
+}
