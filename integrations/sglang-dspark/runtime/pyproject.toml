@@ -1,0 +1,55 @@
+[project]
+name = "asd-dspark-reproduction-runtime"
+version = "0.1.0"
+requires-python = "==3.11.*"
+dependencies = [
+  "cuda-bindings==13.0.3",
+  "cuda-python==13.0.3",
+  "datasets==5.0.1",
+  "flashinfer-python[cu13]==0.6.14",
+  "huggingface-hub==1.25.1",
+  "numpy==2.3.5",
+  "nvidia-cuda-cccl==13.0.85",
+  "nvidia-cuda-crt==13.0.88",
+  "nvidia-cuda-nvcc==13.0.88",
+  "nvidia-cuda-nvrtc==13.0.88",
+  "nvidia-cuda-runtime==13.0.96",
+  "nvidia-nvjitlink==13.0.88",
+  "nvidia-nvvm==13.0.88",
+  "sglang==0.5.16",
+  "sglang-kernel==0.4.5",
+  "torch==2.11.0",
+  "torchaudio==2.11.0",
+  "torchvision==0.26.0",
+  "triton==3.6.0"
+]
+
+[tool.uv]
+package = false
+prerelease = "allow"
+
+[tool.uv.sources]
+sglang = { git = "https://github.com/sgl-project/sglang.git", rev = "fdebc938f7f4d16fe6b9f55dcd9a767cf0899ea1", subdirectory = "python" }
+sglang-kernel = { index = "sglang-cu130" }
+torch = { index = "pytorch-cu130" }
+torchaudio = { index = "pytorch-cu130" }
+torchvision = { index = "pytorch-cu130" }
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[[tool.uv.index]]
+name = "sglang-cu130"
+url = "https://docs.sglang.ai/whl/cu130"
+explicit = true
+
+[dependency-groups]
+build = [
+  "build==1.5.0",
+  "setuptools==81.0.0",
+  "setuptools-rust==1.13.0",
+  "setuptools-scm==10.2.1",
+  "wheel==0.47.0"
+]

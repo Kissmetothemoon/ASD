@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "public_method_name": "ASD",
+  "historical_experiment_name": "HEDGE v4",
+  "sglang": {
+    "version": "0.5.16",
+    "repository": "https://github.com/sgl-project/sglang.git",
+    "base_commit": "fdebc938f7f4d16fe6b9f55dcd9a767cf0899ea1"
+  },
+  "patch": {
+    "path": "integrations/sglang-dspark/sglang-0.5.16-asd.patch",
+    "sha256": "8106bea5e225f95c48368970b6da60e470b58b714af6cab9eae50ac341194eb0",
+    "historical_patch_sha256": "a4077b9f822c9c830511adf85a3480ed1f6f994ff416da20ce2391b769910c52",
+    "changed_files": 5
+  },
+  "runtime": {
+    "python": "3.11.*",
+    "pyproject_sha256": "6db7b0b31c3febce3f699ecc477f7bc2abedd0f5cc714888d65001bfae449397",
+    "uv_lock_sha256": "dfd1274fdc9960d50ef037685dfc117559b2892883a938c6e75b2f7869e74820"
+  },
+  "semantic_changes_from_historical_patch": [],
+  "non_semantic_publication_changes": [
+    "renamed HEDGE symbols and environment variables to ASD",
+    "imported the decision rule from the installed ASD package instead of an injected duplicate",
+    "isolated the frozen rule under asd.reproduce.dspark so the existing Qwen-facing API remains unchanged"
+  ]
+}

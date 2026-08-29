@@ -13,17 +13,23 @@ already verified contiguous suffix to be committed instead of discarded.
 
 ## Release Scope
 
-This repository is deliberately small and auditable:
+This repository keeps the smaller Qwen experiments as the primary,
+easier-to-run ASD examples:
 
 - a dependency-free Python implementation of ASD prefix selection;
 - a PyTorch full-logit adapter for the DeepSpec DSpark verifier;
 - a minimal patch and integration guide for an upstream DeepSpec checkout;
-- frozen and discovery-only DSpark configurations;
+- frozen and discovery-only Qwen/DSpark configurations;
 - a same-GPU baseline-candidate-baseline (B-C-B) launcher and result checker;
 - CPU-only unit tests and GitHub Actions CI.
 
-DeepSpec, model weights, DSpark checkpoints, datasets, benchmark answers, and
-generated experiment outputs are not included. See `THIRD_PARTY.md`.
+It additionally contains a separate, pinned reproduction package for the
+DeepSeek-V4-Flash-DSpark experiment. That 8-GPU experiment is a large-model
+showcase, not a replacement for the Qwen workflow or its ASD configuration.
+
+DeepSpec, SGLang, model weights, DSpark checkpoints, datasets, benchmark
+answers, and generated experiment outputs are not included. See
+`THIRD_PARTY.md`.
 
 ## Patent and IP
 
@@ -81,9 +87,33 @@ MATH-500 completion-hash divergence exceeded 95%. These observations are why
 the code reports speed eligibility and quality constraints separately. Re-run
 the B-C-B and natural-EOS protocols on every deployment workload.
 
+### DeepSeek large-model showcase
+
+The repository also records one historical run on
+`deepseek-ai/DeepSeek-V4-Flash-DSpark`. It used SGLang 0.5.16, tensor
+parallelism 8, eight NVIDIA H20 GPUs, 10 untimed warmups, and 500 serial GSM8K
+requests.
+
+| Arm | Completion tokens | Timed seconds | Output TPS | GSM8K matches |
+| --- | ---: | ---: | ---: | ---: |
+| Native DSpark | 74,594 | 2,348.319 | 31.765 | 478 / 500 |
+| ASD | 75,819 | 2,263.710 | 33.493 | 474 / 500 |
+
+This run measured `+5.44%` output TPS and a `-0.8` percentage-point GSM8K
+match-rate change. It is supplied as a reproducible large-model application,
+not as the repository's default quick start. Its frozen HEDGE v4 decision
+semantics and normalized suffix values are isolated under
+`asd.reproduce.dspark`; they do not change the existing Qwen-facing `asd` API
+or the `B=8, g=0.25, m=2` configuration above.
+
+See
+[`reference_results.json`](experiments/deepseek-v4-flash-dspark/reference_results.json),
+[`protocol.json`](experiments/deepseek-v4-flash-dspark/protocol.json), and the
+[`reproduction guide`](docs/DSPARK_REPRODUCTION.md).
+
 ## Configuration
 
-The reproducible DSpark candidate is `configs/dspark_stable.json`:
+The reproducible Qwen/DSpark candidate is `configs/dspark_stable.json`:
 
 | Field | Default | Meaning |
 | --- | ---: | --- |
@@ -146,7 +176,7 @@ decision = choose_prefix(
 print(decision.accepted_tokens, state.remaining)
 ```
 
-## DSpark Case
+## Qwen/DeepSpec DSpark Case
 
 Read `docs/DEEPSPEC_DSPARK.md` before modifying an evaluator. The integration
 creates one persistent `RequestRiskState` per request and calls
@@ -171,15 +201,41 @@ PYTHONPATH=src python scripts/run_deepspec_bcb.py \
 See `docs/EVALUATION.md` for the runner contract, paired result checker, fixed
 work versus natural EOS, and eligibility rules.
 
+## DeepSeek Full Reproduction
+
+The DeepSeek showcase needs roughly 167 GB for the model and eight visible
+GPUs. Install its controller and inspect the full run before launching model
+processes:
+
+```bash
+python -m pip install -e '.[reproduction]'
+asd-dspark-reproduce download-model \
+  --output-dir models/DeepSeek-V4-Flash-DSpark
+asd-dspark-reproduce all \
+  --model-path models/DeepSeek-V4-Flash-DSpark \
+  --runtime-dir .asd-runtime/dspark \
+  --output-dir runs/dspark-reproduction \
+  --dry-run
+```
+
+Remove `--dry-run` and add `--resume` to execute the pinned protocol. The
+controller prepares the SGLang runtime, materializes the pinned deterministic
+GSM8K split, checks B=0 token identity, recalibrates the frozen DeepSeek
+configuration, and runs fresh native and ASD arms. See
+`docs/DSPARK_REPRODUCTION.md` for exact requirements and stage commands.
+
 ## Repository Layout
 
 ```text
-src/asd/                  ASD selector, state, metrics, and DSpark adapter
-configs/                  Frozen and discovery-only JSON profiles
-patches/                  Upstream DeepSpec integration patch
-scripts/                  B-C-B launcher and paired result checker
-tests/                    CPU-only unit tests
-docs/                     Integration and evaluation contracts
+src/asd/                  Qwen-facing ASD selector, state, metrics, and adapter
+src/asd/reproduce/dspark/ Frozen DeepSeek experiment controller and rule
+configs/                  Qwen profiles plus isolated DeepSeek profiles
+patches/                  Existing upstream DeepSpec integration patch
+integrations/             Pinned SGLang integration for the DeepSeek showcase
+experiments/              DeepSeek protocol and historical reference result
+scripts/                  Qwen B-C-B launcher and paired result checker
+tests/                    Core and reproduction unit tests
+docs/                     Integration, evaluation, and reproduction contracts
 .github/workflows/        Public CI configuration
 ```
 
@@ -189,10 +245,11 @@ docs/                     Integration and evaluation contracts
 - reference adapter supports batch size one and gathers full logits;
 - the clarity-first adapter materializes compact scores on CPU and is not a
   fused production kernel; measure its overhead in the target runtime;
-- no tensor-parallel fused kernel or production scheduler integration;
+- the DeepSeek patch is pinned to one SGLang commit and block size 5;
 - no claim of lossless decoding or model-distribution preservation;
 - performance depends on target/draft pairing, workload, runtime, and hardware;
-- tests cover policy logic, not model-level accuracy or a local DeepSpec build.
+- tests cover policy and protocol logic, not model-level accuracy or a local
+  full model run.
 
 ## Contributing and Security
 
@@ -205,5 +262,5 @@ credentials, absolute internal paths, or generated caches in issues or commits.
 
 ASD is released under the Apache License 2.0. Retain `LICENSE` and `NOTICE`
 when redistributing the work. The Apache 2.0 patent terms and the repository's
-public IP scope are described in `PATENT_AND_IP.md`. DeepSpec and all model,
-dataset, and runtime dependencies retain their own licenses and notices.
+public IP scope are described in `PATENT_AND_IP.md`. DeepSpec, SGLang, and all
+model, dataset, and runtime dependencies retain their own licenses and notices.

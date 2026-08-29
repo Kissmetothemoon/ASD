@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "completed_at_utc": "2026-07-29T10:15:53Z",
+  "method_identity": {
+    "public_name": "ASD",
+    "historical_experiment_name": "HEDGE v4",
+    "public_implementation": "asd.reproduce.dspark",
+    "semantic_difference_to_historical_hedge_v4": "none",
+    "relationship_to_primary_qwen_api": "isolated experiment implementation; the existing asd API and Qwen configuration are unchanged",
+    "config": {
+      "B": 2.0625,
+      "g": 2.0625,
+      "m": 1,
+      "value_scheme": "normalized_suffix",
+      "block_size": 5
+    }
+  },
+  "model": {
+    "repo_id": "deepseek-ai/DeepSeek-V4-Flash-DSpark",
+    "huggingface_revision": "62af8fffb2f7030cac4de2f0169f5b8d1101b646",
+    "historical_provider": "ModelScope",
+    "provider_snapshot": "bb7ac3172e1a257482d3256d7a720f20ea39ce25625f3cacc1091f59ad43bcae",
+    "payload_bytes": 166898666759,
+    "weight_shards": 48,
+    "full_checkpoint_hash_performed": false
+  },
+  "runtime": {
+    "hardware": "8x NVIDIA H20",
+    "tensor_parallel_size": 8,
+    "sglang_version": "0.5.16",
+    "sglang_commit": "fdebc938f7f4d16fe6b9f55dcd9a767cf0899ea1",
+    "historical_integration_patch_sha256": "a4077b9f822c9c830511adf85a3480ed1f6f994ff416da20ce2391b769910c52",
+    "public_integration_patch_sha256": "8106bea5e225f95c48368970b6da60e470b58b714af6cab9eae50ac341194eb0"
+  },
+  "dataset": {
+    "repo_id": "openai/gsm8k",
+    "revision": "740312add88f781978c0658806c59bc2815b9866",
+    "datasets_fingerprint": "59ec1b7f9357c7a2",
+    "seed": 980406,
+    "calibration_count": 32,
+    "formal_count": 500,
+    "warmup_count": 10
+  },
+  "calibration": {
+    "b0_complete_token_id_lists_equal": 32,
+    "b0_mismatch_count": 0,
+    "native_completion_tokens": 5183,
+    "b0_completion_tokens": 5183,
+    "strict_rejection_trace_rows_seen": 1097,
+    "positive_value_count": 484,
+    "trace_rows_dropped": 0,
+    "q25": 2.0625
+  },
+  "formal": {
+    "native": {
+      "completion_tokens": 74594,
+      "timed_wall_seconds": 2348.31919839,
+      "end_to_end_output_tps": 31.76484698125425,
+      "gsm8k_matches": 478,
+      "gsm8k_mismatches": 11,
+      "parse_failures": 11,
+      "proposal_count": 16045,
+      "accepted_draft_tokens": 58473,
+      "mean_accepted_draft_tokens_per_proposal": 3.644312870052976,
+      "acceptance_length_including_bonus": 4.64904954814584,
+      "failed_requests": 0
+    },
+    "asd": {
+      "completion_tokens": 75819,
+      "timed_wall_seconds": 2263.710352404,
+      "end_to_end_output_tps": 33.493242595936465,
+      "gsm8k_matches": 474,
+      "gsm8k_mismatches": 13,
+      "parse_failures": 13,
+      "proposal_count": 15386,
+      "accepted_draft_tokens": 60357,
+      "mean_accepted_draft_tokens_per_proposal": 3.922851943325101,
+      "acceptance_length_including_bonus": 4.927791498765111,
+      "relaxed_mismatches": 1427,
+      "regret_charged": 723.75,
+      "state_leaks": 0,
+      "failed_requests": 0
+    }
+  },
+  "delta": {
+    "end_to_end_output_tps_percent": 5.4412212837109175,
+    "timed_wall_seconds_percent": -3.602953382317353,
+    "gsm8k_match_rate_percentage_points": -0.8,
+    "mean_accepted_draft_tokens_per_proposal_percent": 7.643116362511315,
+    "complete_formal_token_id_lists_different": 485,
+    "complete_formal_token_id_lists_equal": 15
+  },
+  "interpretation": "This is one hardware-specific run, not a universal speed or quality guarantee. ASD intentionally permits output changes."
+}

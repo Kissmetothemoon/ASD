@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.coverage
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+build/
+dist/
+
+# Reproduction outputs and large model/runtime artifacts.
+outputs/
+runs/
+models/
+checkpoints/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.whl
+
+# Local SGLang checkouts created by the reproduction command.
+.asd-runtime/
+

@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "approximate-speculative-decoding"
+version = "0.1.0"
+description = "Reference implementation and DSpark reproduction harness for Approximate Speculative Decoding"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{name = "The ASD Authors"}]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.optional-dependencies]
+torch = ["torch>=2.0"]
+reproduction = [
+  "datasets==5.0.1",
+  "huggingface-hub==1.25.1",
+  "numpy==2.3.5; python_version >= '3.11'",
+]
+test = []
+
+[project.scripts]
+asd = "asd.cli:main"
+asd-dspark-reproduce = "asd.reproduce.dspark.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"

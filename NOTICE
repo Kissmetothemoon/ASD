@@ -1,0 +1,11 @@
+Approximate Speculative Decoding (ASD)
+Copyright 2026 The ASD Authors
+
+The frozen DeepSeek experiment semantics and records were migrated from the
+project's separate DeepSpec research repository, where the experiment used the
+internal name HEDGE. DeepSpec itself is not distributed here. See
+THIRD_PARTY.md for the source-provenance and pre-release ownership check.
+
+The optional integration patch targets SGLang, whose pinned source commit is
+licensed under the Apache License 2.0. SGLang is not distributed as part of
+this repository.

@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "model": {
+    "repo_id": "deepseek-ai/DeepSeek-V4-Flash-DSpark",
+    "huggingface_revision": "62af8fffb2f7030cac4de2f0169f5b8d1101b646",
+    "historical_modelscope_snapshot": "bb7ac3172e1a257482d3256d7a720f20ea39ce25625f3cacc1091f59ad43bcae",
+    "served_model_name": "deepseek-v4-flash-dspark"
+  },
+  "dataset": {
+    "repo_id": "openai/gsm8k",
+    "config": "main",
+    "split": "test",
+    "revision": "740312add88f781978c0658806c59bc2815b9866",
+    "selection": "shuffle row indices with random.Random(980406); first 32 calibration; next 500 formal",
+    "seed": 980406,
+    "calibration_count": 32,
+    "formal_count": 500,
+    "warmup_count": 10,
+    "warmup_selection": "first 10 calibration examples"
+  },
+  "request": {
+    "endpoint": "/v1/chat/completions",
+    "messages": "one user message; no system prompt",
+    "user_suffix": "Please reason step by step, and put your final answer within \\boxed{}.",
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    },
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 512,
+    "stream": false,
+    "concurrency": 1,
+    "max_total_attempts": 3
+  },
+  "runtime": {
+    "python": "3.11.*",
+    "sglang_version": "0.5.16",
+    "sglang_commit": "fdebc938f7f4d16fe6b9f55dcd9a767cf0899ea1",
+    "torch": "2.11.0",
+    "cuda": "13.0",
+    "tensor_parallel_size": 8,
+    "speculative_algorithm": "DSPARK",
+    "speculative_dspark_block_size": 5,
+    "moe_runner_backend": "flashinfer_mxfp4",
+    "speculative_moe_runner_backend": "flashinfer_mxfp4",
+    "context_length": 4096,
+    "max_running_requests": 1,
+    "mem_fraction_static": 0.8,
+    "disable_cuda_graph": true,
+    "disable_overlap_schedule": true,
+    "disable_radix_cache": true
+  },
+  "calibration": {
+    "native_trace": "record the first strict-rejection barrier for every DSpark proposal without changing native acceptance",
+    "b0_equivalence": "compare complete output_token_ids for all 32 native and ASD B=0 responses",
+    "q25": "linear interpolation with h=(n-1)*0.25 over positive finite regret/value values",
+    "frozen_config": {
+      "B": 2.0625,
+      "g": 2.0625,
+      "m": 1,
+      "value_scheme": "normalized_suffix",
+      "block_size": 5
+    }
+  },
+  "timing": {
+    "clock": "time.monotonic_ns",
+    "start": "immediately before formal request 1",
+    "end": "immediately after formal request 500 becomes terminal",
+    "warmup_included": false,
+    "http_queue_retry_and_backoff_included": true,
+    "formula": "sum(formal completion_tokens) / timed_wall_seconds"
+  },
+  "answer_scoring": {
+    "prediction": "last complete numeric \\boxed{...}",
+    "reference": "last numeric #### marker",
+    "normalization": "numeric string normalization implemented by asd.reproduce.dspark.answers"
+  }
+}
