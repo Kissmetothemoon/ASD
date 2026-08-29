@@ -3,8 +3,7 @@ message: "If you use ASD, please cite the accompanying paper and this software r
 title: "Approximate Speculative Decoding"
 type: software
 authors:
-  - family-names: "ASD Authors"
+  - name: "ASD Contributors"
 version: 0.1.0
-date-released: 2026-08-29
 license: Apache-2.0
 repository-code: "https://github.com/Kissmetothemoon/ASD"

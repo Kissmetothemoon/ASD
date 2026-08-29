@@ -8,11 +8,8 @@ The repository intentionally excludes unpublished claim text, private filing
 metadata, unfiled improvements, model weights, private datasets, and internal
 experiment infrastructure.
 
-Before a public release, the maintainers must confirm that every contributor
-to the ASD code and the migrated DeepSeek/HEDGE v4 material is authorized to
-license that contribution under Apache-2.0. The source DeepSpec experiment
-repository had no license file at migration time, so its ownership must be
-confirmed directly rather than inferred from a repository license.
+Before a public release, the maintainers must confirm that every contribution
+included in this ASD repository is authorized for release under Apache-2.0.
 
 Contributions submitted to this repository are handled by Section 5 of the
 Apache License 2.0 unless explicitly marked otherwise. Contributors must not

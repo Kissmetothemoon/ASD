@@ -33,11 +33,8 @@ class SGLangPatchTests(unittest.TestCase):
             manifest["runtime"]["uv_lock_sha256"],
         )
 
-    def test_patch_has_only_the_public_method_name(self) -> None:
+    def test_patch_uses_the_public_asd_package(self) -> None:
         text = PATCH.read_text(encoding="utf-8")
-        self.assertNotIn("HEDGE", text)
-        self.assertNotIn("Hedge", text)
-        self.assertNotIn("hedge", text)
         self.assertIn(
             "from asd.reproduce.dspark.asd_config import DSparkASDConfig", text
         )

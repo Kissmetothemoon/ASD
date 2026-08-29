@@ -4,12 +4,12 @@ Complete this checklist against the exact release commit.
 
 ## Required approvals
 
-- [ ] Confirm every ASD and migrated DeepSeek/HEDGE v4 contributor authorized
-      release of their contribution under Apache License 2.0.
+- [ ] Confirm every contribution included in ASD is authorized for release
+      under Apache License 2.0.
 - [ ] Obtain project-owner approval for the public model and benchmark claims.
 - [ ] Complete any required patent, employer, institution, or venue review.
-- [ ] Replace placeholder author metadata in `NOTICE`, `CITATION.cff`, and
-      `pyproject.toml` with the approved public names.
+- [ ] Confirm that the generic contributor attribution is appropriate while
+      individual author names remain private.
 
 ## Repository contents
 
@@ -39,6 +39,8 @@ Complete this checklist against the exact release commit.
 
 - [ ] Clearly label Qwen as the accessible primary example and DeepSeek as the
       optional 8xH20 large-model showcase.
+- [ ] Confirm all installation instructions start from a cloned source checkout
+      and do not advertise a PyPI release.
 - [ ] Present historical numbers as hardware-specific experiment snapshots,
       not general guarantees.
 - [ ] State that ASD is approximate and may change output and task quality.

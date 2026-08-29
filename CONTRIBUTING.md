@@ -16,7 +16,7 @@ Within `asd.reproduce.dspark`, changes to `B`, `g`, `m`, the normalized
 suffix-value definition, block-size validation, tie handling, request-state
 lifecycle, or candidate/logit alignment change the frozen DeepSeek decode
 semantics. Such changes require a new protocol version and may not be presented
-as reproducing the historical HEDGE v4 experiment. Do not propagate these
+as reproducing the frozen DeepSeek/DSpark experiment. Do not propagate these
 DeepSeek-specific semantics into the Qwen-facing API without a separate design
 and compatibility review.
 

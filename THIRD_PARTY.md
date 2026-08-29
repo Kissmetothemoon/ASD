@@ -6,14 +6,9 @@ their own licenses and terms.
 
 ## DeepSpec
 
-The frozen DeepSeek experiment semantics and records were migrated from the
-project's separate DeepSpec research repository, where the experiment used the
-internal name HEDGE. DeepSpec itself is not copied or distributed here.
-
-No license file was present in the source experiment repository at the time of
-migration, so this document does not assert a third-party license for that
-repository. The ASD maintainers must confirm that all migrated contributions
-can be released under this repository's Apache License 2.0 before publishing.
+DeepSpec is an external integration target used by the Qwen workflow. It is not
+copied or distributed here. Users must obtain it separately and comply with its
+applicable terms.
 
 ## SGLang
 

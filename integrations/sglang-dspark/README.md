@@ -7,11 +7,10 @@ DSpark reproduction workflow. The patch targets SGLang `0.5.16` at commit:
 fdebc938f7f4d16fe6b9f55dcd9a767cf0899ea1
 ```
 
-The integration preserves the frozen experiment behavior while replacing the
-internal experiment name HEDGE with the public name ASD. Its hot path imports
-`DSparkASDConfig` and `choose_prefix_batch` from the DSpark reproduction
-package, so this integration has one frozen decision-rule implementation
-without changing the repository's existing Qwen-facing ASD API.
+The integration preserves the frozen experiment behavior under the public ASD
+name. Its hot path imports `DSparkASDConfig` and `choose_prefix_batch` from the
+DSpark reproduction package, so this integration has one frozen decision-rule
+implementation without changing the repository's existing Qwen-facing ASD API.
 
 The patch adds:
 

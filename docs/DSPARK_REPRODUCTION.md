@@ -18,6 +18,9 @@ restarts the server between arms, and refuses to replace partial artifacts.
 - network access to GitHub, Hugging Face, PyPI, the PyTorch CUDA 13 index, and
   the SGLang CUDA 13 wheel index during preparation.
 
+PyPI access in this list is only for third-party dependencies. ASD itself is
+installed from the cloned source checkout and is not published to PyPI.
+
 The controller can run from Python 3.10 or newer. It creates a separate Python
 3.11 environment for the pinned SGLang server.
 

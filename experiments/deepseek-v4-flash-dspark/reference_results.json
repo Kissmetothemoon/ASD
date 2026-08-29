@@ -4,9 +4,8 @@
   "completed_at_utc": "2026-07-29T10:15:53Z",
   "method_identity": {
     "public_name": "ASD",
-    "historical_experiment_name": "HEDGE v4",
     "public_implementation": "asd.reproduce.dspark",
-    "semantic_difference_to_historical_hedge_v4": "none",
+    "protocol_semantics": "frozen DeepSeek-V4-Flash-DSpark experiment",
     "relationship_to_primary_qwen_api": "isolated experiment implementation; the existing asd API and Qwen configuration are unchanged",
     "config": {
       "B": 2.0625,

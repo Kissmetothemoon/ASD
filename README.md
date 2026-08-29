@@ -101,8 +101,8 @@ requests.
 
 This run measured `+5.44%` output TPS and a `-0.8` percentage-point GSM8K
 match-rate change. It is supplied as a reproducible large-model application,
-not as the repository's default quick start. Its frozen HEDGE v4 decision
-semantics and normalized suffix values are isolated under
+not as the repository's default quick start. Its frozen DeepSeek/DSpark
+decision semantics and normalized suffix values are isolated under
 `asd.reproduce.dspark`; they do not change the existing Qwen-facing `asd` API
 or the `B=8, g=0.25, m=2` configuration above.
 
@@ -136,6 +136,9 @@ numeric budget has the same behavioral meaning for another target model.
 ## Quick Start
 
 ASD's core has no runtime dependencies:
+
+This project is installed from a cloned source checkout and is not published
+to PyPI.
 
 ```bash
 python -m venv .venv

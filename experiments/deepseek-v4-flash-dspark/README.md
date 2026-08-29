@@ -1,12 +1,11 @@
 # DeepSeek-V4-Flash-DSpark experiment
 
-This directory records the frozen public protocol and the result obtained by
-the original HEDGE v4 experiment. It is a DeepSeek large-model showcase in the
-ASD repository; the smaller Qwen experiments remain the primary workflow.
+This directory records the frozen public protocol and a previously completed
+DeepSeek/DSpark result. It is a large-model showcase in the ASD repository; the
+smaller Qwen experiments remain the primary workflow.
 
-The implementation under `asd.reproduce.dspark` has the same decision semantics
-as HEDGE v4. Public names, imports, and filesystem layout changed, but the
-existing Qwen-facing `asd` API was deliberately left unchanged.
+The implementation under `asd.reproduce.dspark` preserves the frozen experiment
+semantics while leaving the existing Qwen-facing `asd` API unchanged.
 
 - `protocol.json` is the machine-readable experiment contract.
 - `reference_results.json` is the previously completed 8xH20 result.

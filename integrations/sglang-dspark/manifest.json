@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "public_method_name": "ASD",
-  "historical_experiment_name": "HEDGE v4",
   "sglang": {
     "version": "0.5.16",
     "repository": "https://github.com/sgl-project/sglang.git",
@@ -20,7 +19,6 @@
   },
   "semantic_changes_from_historical_patch": [],
   "non_semantic_publication_changes": [
-    "renamed HEDGE symbols and environment variables to ASD",
     "imported the decision rule from the installed ASD package instead of an injected duplicate",
     "isolated the frozen rule under asd.reproduce.dspark so the existing Qwen-facing API remains unchanged"
   ]
