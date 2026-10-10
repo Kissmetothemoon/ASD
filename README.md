@@ -11,6 +11,28 @@ already verified contiguous suffix to be committed instead of discarded.
 > local target-logit regret; it does not guarantee task accuracy, semantic
 > quality, safety, or output identity.
 
+## Use with Transformers
+
+ASD is available as a [custom generation method](https://huggingface.co/ynFeng/approximate-speculative-decoding)
+for Hugging Face Transformers (5.19.x). No library changes are needed:
+
+```python
+outputs = model.generate(
+    **inputs,
+    assistant_model=assistant_model,
+    custom_generate="ynFeng/approximate-speculative-decoding",
+    trust_remote_code=True,
+    assistant_asd_budget=2.0,          # request-level regret budget B; 0.0 = strict
+    assistant_asd_local_ratio=0.25,    # per-token regret / suffix-value cap g
+    assistant_asd_max_mismatches=2,    # per-block relaxed mismatch cap m
+)
+```
+
+With `assistant_asd_budget=0` (or no ASD knobs) the output is token-identical
+to strict greedy assisted decoding, including with `prompt_lookup_num_tokens`.
+The acceptance loop mirrors `GenerationMixin._assisted_decoding` from
+transformers 5.19.x and is Apache-2.0 licensed.
+
 ## Release Scope
 
 This repository keeps the smaller Qwen experiments as the primary,
